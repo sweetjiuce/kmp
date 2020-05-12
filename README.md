@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-void fail(char *b,char *f)
+void fail(char *b,char *f) //计算失败函数
 {
 	int l = strlen(b);
 	f[0] = -1;
@@ -18,9 +18,9 @@ void fail(char *b,char *f)
 			k++;
 			j++;
 			if(b[j] == b[k])
-				f[j] = f[k];
+				f[j] = f[k]; //如果它们俩相等，那完全可以现在进行赋值，而不必回溯
 			else
-				f[j] = k;
+				f[j] = k; // 如果不相等，则老老实实回去
 
 		}
 		else
@@ -38,13 +38,13 @@ void kmp(char *a, char *b)
 	fail(b,f);
 	while(i < la && j < lb )
 	{
-		if( j==-1 || a[i] == b[j])
+		if( j==-1 || a[i] == b[j]) //fail函数里有-1 所以需要判断-1的情况
 		{
 			i++;
 			j++;
 
 		}
-		else
+		else//如果不匹配 则j 从f（j）开始 不必完全回溯到初始字符，这就是kmp的魅力
 			j = f[j];
 	}
 	if(j == lb)
